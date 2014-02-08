@@ -17,7 +17,7 @@ int main (int argc, string argv[])
     // casting string k to an int
     int k = atoi(argv[1]);
     
-    printf("Hand me a string, good sir or madam!\n");
+    //printf("Hand me a string, good sir or madam!\n");
     string p = GetString();
     
     // iterate through string, encode by ROTk
