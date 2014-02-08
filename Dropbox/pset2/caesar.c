@@ -20,21 +20,37 @@ int main (int argc, string argv[])
     printf("Hand me a string, good sir or madam!\n");
     string p = GetString();
     
-    // iterate through string, encoding by ROTk
+    // iterate through string, encode by ROTk
     for (int i = 0, n = strlen(p); i < n; i++)
     {
-            // formula for caesar's cipher
-            // c = (p + k) % 26
-            p[i] += (k % 26);
-        
+        if (islower(p[i]))
+        {
+            // formula for caesar's cipher: c = (p + k) % 26
+            int new = p[i] + (k % 26);
+            
             // to wrap letters back around
-            /*
-            if (p[i] > 90)
+            if (new > 122)
             {
-                p[i] -= 26;
+                new = new - 26;
             }
-            */
+            printf("%c", new);
+        }
+            
+        else if (isupper(p[i]))
+        {
+            //apply cipher and wrap letters
+            int new = p[i] + (k % 26);
+            
+            if (new > 90)
+            {
+                new = new - 26;
+            }
+            printf("%c", new);
+        }
+        else
+        {
+            printf("%c", p[i]);
+        }
     }
-    printf("%s\n", p);
-      
+    printf("\n");
 }
