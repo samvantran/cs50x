@@ -13,7 +13,11 @@ int main (int argc, string argv[])
         printf("No no no! Not in my house!\n");
         return 1;
     }
-            
+    
+    /*  verify keyword is composed of alphabetical characters
+        (note: attempting if (argc != 2 || isalpha(argv[1]) != true)
+        in above if statement resulted in segfaults); had to separate
+    */        
     for (int i = 0, n = strlen(argv[1]); i < n; i++)
     {
         if ((isalpha(argv[1][i])) == false)
@@ -39,23 +43,21 @@ int main (int argc, string argv[])
         {
             ciph[i] = k[i] - 65;
         }
-        
-        printf("%d, ", ciph[i]);
         ciphlen++;
     }
-    printf("%d\n", ciphlen);
   
     //printf("Hand me a string, good sir or madam!\n");
-    //string p = GetString();
+    string p = GetString();
     
-    /*
-    // iterate through string, encode by ROTk
+    // iterate through string encoding each letter by array index 
+    int index = 0;
     for (int i = 0, n = strlen(p); i < n; i++)
     {
         if (islower(p[i]))
         {
             // formula for caesar's cipher: c = (p + k) % 26
-            int new = p[i] + (k % 26);
+            int new = p[i] + (ciph[index % ciphlen]);
+            index++;
             
             // to wrap letters back around
             if (new > 122)
@@ -68,7 +70,8 @@ int main (int argc, string argv[])
         else if (isupper(p[i]))
         {
             //apply cipher and wrap letters
-            int new = p[i] + (k % 26);
+            int new = p[i] + (ciph[index % ciphlen]);
+            index++;
             
             if (new > 90)
             {
@@ -82,5 +85,5 @@ int main (int argc, string argv[])
         }
     }
     printf("\n");
-    */
+    return 0;
 }
