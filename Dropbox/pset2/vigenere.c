@@ -8,28 +8,45 @@
 int main (int argc, string argv[])
 {
     // checking for only 2 cmd line args
-    if (argc != 2 || argv[1] < 0) 
+    if (argc != 2)
     {
         printf("No no no! Not in my house!\n");
         return 1;
     }
+            
+    for (int i = 0, n = strlen(argv[1]); i < n; i++)
+    {
+        if ((isalpha(argv[1][i])) == false)
+        {
+            printf("No no no! Not in my house!\n");
+            return 1;
+        }
+    }
     
     // create array of length k to store all keys
     string k = argv[1];
-    int n = strlen(k);
+    int n = strlen(argv[1]);
     int ciph[n];
     int ciphlen = 0;
     
     for (int i = 0; i < n; i++)
     {
-        int j = atoi(&k[i]);
-        ciph[i] = j;
+        if (islower(k[i]))
+        {
+            ciph[i] = k[i] - 97;
+        }
+        else
+        {
+            ciph[i] = k[i] - 65;
+        }
+        
+        printf("%d, ", ciph[i]);
         ciphlen++;
     }
     printf("%d\n", ciphlen);
   
     //printf("Hand me a string, good sir or madam!\n");
-    string p = GetString();
+    //string p = GetString();
     
     /*
     // iterate through string, encode by ROTk
