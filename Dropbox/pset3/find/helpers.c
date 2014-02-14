@@ -15,19 +15,42 @@
  * Returns true if value is in array of n values, else false.
  */
 
-bool search(int value, int values[], int n)
+//implement binary search
+
+//---- Continue: last time, was unable to implement binary search due to search parameter constraints (3 args)
+//---- can still do it iteratively or write a fn that search calls recursively w/ diff params
+bool search(int value, int values[], int max)
 {
-    if (value < 0)
-        return false;
-        
-    // implement a searching algorithm
-    for (int i = 0; i < n; i++)
+    //function to find midpoint
+    int min = 0;
+    int midPoint;
+    int findMidPoint(min, max)
     {
-        if (values[i] == value)
-            return true;
+        midPoint = (max - min) / 2;
     }
-    return false;
+    
+    if (min > max)
+    {
+        return -1;
+    }
+    else
+    {
+        findMidPoint(min, max);
+        if(values[midPoint] < value)
+        {
+            search(value, values[], midPoint + 1, max)
+        }
+        else if(values[midPoint] > value)
+        {
+            search(value, values[], min, midPoint - 1)
+        }
+        else
+        {
+            return values[midPoint];
+        }
+    }
 }
+
 
 /**
  * Sorts array of n values.
@@ -43,7 +66,7 @@ void sort(int values[], int n)
     
     printf("\n");
     
-    // TODO: implement an O(n^2) sorting algorithm
+    // implement an O(n^2) sorting algorithm
     // implement bubble sort
     int k = 0;
     bool didntSort = false;
@@ -70,23 +93,7 @@ void sort(int values[], int n)
     {
         printf("%d, ", values[i]);
     }
-    
-    
-    /*
-        
-    int counter = 0;
-
-    
-    do
-    {
-        for (int i = 0; i < n - 1; i++)
-        {
-
-        }  
-    }
-    while (counter > 0);
-    */
-    
+   
     printf("\n");
     return;
     

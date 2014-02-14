@@ -42,11 +42,13 @@ int main(int argc, string argv[])
     }
 
     // generate pseudorandom numbers argc times
+    int genArray[n];
     for (int i = 0; i < n; i++)
     {
+        genArray[i] = rand() % LIMIT;
         printf("%i\n", rand() % LIMIT);
     }
-
+    
     // that's all folks
     return 0;
 }
