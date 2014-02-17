@@ -10,62 +10,37 @@
 #include <cs50.h>
 #include <stdio.h>
 #include "helpers.h"
+#include <stdbool.h>
 
 /**
  * Returns true if value is in array of n values, else false.
  */
 
-//implement binary search
-
-//---- Continue: last time, was unable to implement binary search due to search parameter constraints (3 args)
-//---- can still do it iteratively or write a fn that search calls recursively w/ diff params
 bool search(int value, int values[], int max)
 {
-    //function to find midpoint
-    int min = 0;
-    int midPoint;
-    int findMidPoint(min, max)
+    int lowerBound = 0;
+    int upperBound = max - 1;
+    while (upperBound >= lowerBound)
     {
-        midPoint = (max - min) / 2;
-    }
-    
-    if (min > max)
-    {
-        return -1;
-    }
-    else
-    {
-        findMidPoint(min, max);
-        if(values[midPoint] < value)
+        int midPoint = (lowerBound + upperBound) / 2;
+        if (value == values[midPoint])
         {
-            search(value, values[], midPoint + 1, max)
+            return true;
         }
-        else if(values[midPoint] > value)
+        else if (value < values[midPoint])
         {
-            search(value, values[], min, midPoint - 1)
+            upperBound = midPoint - 1;
         }
         else
         {
-            return values[midPoint];
+            lowerBound = midPoint + 1;
         }
     }
+    return false;
 }
-
-
-/**
- * Sorts array of n values.
- */
 
 void sort(int values[], int n)
 {
-    printf("This is the current array: ");
-    for (int i = 0; i < n; i++)
-    {
-        printf("%d, ", values[i]);
-    }
-    
-    printf("\n");
-    
     // implement an O(n^2) sorting algorithm
     // implement bubble sort
     int k = 0;
@@ -81,21 +56,9 @@ void sort(int values[], int n)
                 values[i + 1] = values[i];
                 values[i] = temp;
                 didntSort = false;
-                printf("Switched %d with %d\n", values[i+1], values[i]);
             }
         }
         k++;
     }
-    
-    printf("This is the sorted array: ");
-    
-    for (int i = 0; i < n; i++)
-    {
-        printf("%d, ", values[i]);
-    }
-   
-    printf("\n");
-    return;
-    
 }
 
