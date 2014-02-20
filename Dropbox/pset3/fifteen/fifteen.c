@@ -148,6 +148,13 @@ void init(void)
  */
 void draw(void)
 {
+    // switch tiles 1 and 2 if odd number of tiles
+    if  (d % 2 == 0)
+    {
+        board[d - 1][d - 2] = 2;
+        board[d - 1][d - 3] = 1;
+    }
+    
     for (int i = 0; i < d; i++)
     {
         for(int j = 0; j < d; j++)
@@ -167,12 +174,6 @@ void draw(void)
             }
         }
         printf("\n");
-    }
-    // switch tiles 1 and 2 if odd number of tiles
-    if  (((d * d ) - 1) % 2 != 0)
-    {
-        board[d][d - 1] = 2;
-        board[d][d - 2] = 1;
     }
 }
 
