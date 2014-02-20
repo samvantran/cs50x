@@ -94,11 +94,11 @@ int main(int argc, string argv[])
         if (!move(tile))
         {
             printf("\nIllegal move.\n");
-            usleep(500000);
+            usleep(200000);
         }
 
         // sleep for animation's sake
-        usleep(500000);
+        usleep(200000);
     }
 
     // that's all folks
@@ -137,10 +137,11 @@ void init(void)
         for (int j = 0; j < d; j++)
         {
             board[i][j] = numbers;
-            printf("board[%d][%d] == %d", i, j, numbers);
             numbers--;
         }
     }
+    //changing last elem to avoid edge case errors
+    board[d-1][d-1] = 100;
 }
 
 /**
@@ -159,18 +160,18 @@ void draw(void)
     {
         for(int j = 0; j < d; j++)
         {
-            if (board[i][j] == 0)
+            if (board[i][j] == 100)
             {
                 printf("  _ ");
             }
-            else if (board[i][j] > 9)
-            {
-                printf(" %d ", board[i][j]);
-            }
             // all #s < 9 are extra spaced for formatting
-            else
+            else if (board[i][j] < 10)
             {
                 printf("  %d ", board[i][j]);
+            }
+            else
+            {
+                printf(" %d ", board[i][j]);
             }
         }
         printf("\n");
@@ -183,9 +184,46 @@ void draw(void)
  */
 bool move(int tile)
 {
-    // linear search for key
-
+    //int blanktile = board[d - 1][d - 1];
+    for (int i = 0; i < d; i++)
+    {
+        for (int j = 0; j < d; j++)
+        {
+            if (board[i][j] == tile)
+            {
+                if(board[i + 1][j] == 100)
+                {
+                    board[i][j] = 100;
+                    board[i + 1][j] = tile;
+                    return true;
+                } 
+                else if(board[i][j + 1] == 100)
+                {
+                    board[i][j] = 100;
+                    board[i][j + 1] = tile;   
+                    return true;             
+                }
+                else if(board[i - 1][j] == 100)
+                {
+                    board[i][j] = 100;
+                    board[i - 1][j] = tile;    
+                    return true;            
+                }
+                else if(board[i][j - 1] == 100)
+                {
+                    board[i][j] = 100;
+                    board[i][j - 1] = tile;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+    }
     return false;
+    
 }
 
 /**
