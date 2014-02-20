@@ -148,19 +148,22 @@ void init(void)
  */
 void draw(void)
 {
-    int numbers = (d * d) - 1;
     for (int i = 0; i < d; i++)
     {
         for(int j = 0; j < d; j++)
         {
-            if (numbers == 0) 
+            if (board[i][j] == 0)
             {
-                printf(" _ ");
+                printf("  _ ");
             }
+            else if (board[i][j] > 9)
+            {
+                printf(" %d ", board[i][j]);
+            }
+            // all #s < 9 are extra spaced for formatting
             else
             {
-            printf(" %d ", numbers);
-            numbers--;
+                printf("  %d ", board[i][j]);
             }
         }
         printf("\n");
@@ -173,7 +176,7 @@ void draw(void)
  */
 bool move(int tile)
 {
-    // TODO
+    // 
     return false;
 }
 
