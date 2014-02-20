@@ -168,6 +168,12 @@ void draw(void)
         }
         printf("\n");
     }
+    // switch tiles 1 and 2 if odd number of tiles
+    if  (((d * d ) - 1) % 2 != 0)
+    {
+        board[d][d - 1] = 2;
+        board[d][d - 2] = 1;
+    }
 }
 
 /**
@@ -176,7 +182,8 @@ void draw(void)
  */
 bool move(int tile)
 {
-    // 
+    // linear search for key
+
     return false;
 }
 
