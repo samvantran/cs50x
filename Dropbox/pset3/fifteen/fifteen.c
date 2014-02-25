@@ -34,7 +34,11 @@ int board[MAX][MAX];
 // board's dimension
 int d;
 
+// checker for game's first initalization
 bool game_initialized;
+
+// original board to check
+int board_check[MAX][MAX];
 
 // prototypes
 void clear(void);
@@ -99,11 +103,11 @@ int main(int argc, string argv[])
         if (!move(tile))
         {
             printf("\nIllegal move.\n");
-            usleep(210000);
+            usleep(100000);
         }
 
         // sleep for animation's sake
-        usleep(210000);
+        usleep(100000);
     }
 
     // that's all folks
@@ -145,8 +149,25 @@ void init(void)
             numbers--;
         }
     }
-    //changing last elem to avoid edge case errors
+    
+    // change last elem to avoid edge case errors
     board[d - 1][d - 1] = 100;
+    
+    // reset numbers
+    numbers = 0;
+    
+    // initialize separate board to check against for game won
+    for (int i = 0; i < d; i++)
+    {
+        for (int j = 0; j < d; j++)
+        {
+            board_check[i][j] = numbers;
+            numbers++;
+        }
+    }
+    
+    // change first elem to 100 for consistency
+    board_check[0][0] = 100;
 }
 
 /**
@@ -165,6 +186,7 @@ void draw(void)
         game_initialized = false;
     }
     
+    // print board
     for (int i = 0; i < d; i++)
     {
         for(int j = 0; j < d; j++)
@@ -241,7 +263,30 @@ bool move(int tile)
  */
 bool won(void)
 {
-    return 0;
+    // initialize counter to zero
+    int board_check_count = 0;
+    
+    // check if game won
+    for (int i = 0; i < d; i++)
+    {
+        for (int j = 0; j < d; j++)
+        {
+            if (board[i][j] == board_check[i][j])
+            {
+                board_check_count++;
+                if (board_check_count == ((d * d) - 1))
+                {
+                    return true;
+                    break;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    return false;
 }
 
 /**
