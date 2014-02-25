@@ -34,6 +34,8 @@ int board[MAX][MAX];
 // board's dimension
 int d;
 
+bool game_initialized;
+
 // prototypes
 void clear(void);
 void greet(void);
@@ -45,6 +47,9 @@ void save(void);
 
 int main(int argc, string argv[])
 {
+    //set initializer to true on prgm start
+    game_initialized = true;
+    
     // greet player
     greet();
 
@@ -94,11 +99,11 @@ int main(int argc, string argv[])
         if (!move(tile))
         {
             printf("\nIllegal move.\n");
-            usleep(200000);
+            usleep(210000);
         }
 
         // sleep for animation's sake
-        usleep(200000);
+        usleep(210000);
     }
 
     // that's all folks
@@ -141,7 +146,7 @@ void init(void)
         }
     }
     //changing last elem to avoid edge case errors
-    board[d-1][d-1] = 100;
+    board[d - 1][d - 1] = 100;
 }
 
 /**
@@ -149,11 +154,15 @@ void init(void)
  */
 void draw(void)
 {
-    // switch tiles 1 and 2 if odd number of tiles
-    if  (d % 2 == 0)
+    // switch tiles 1 and 2 if odd number of tiles and program's first 
+    while (game_initialized == true)
     {
-        board[d - 1][d - 2] = 2;
-        board[d - 1][d - 3] = 1;
+        if  (board[d - 1][d - 1] == 100 && d % 2 == 0)
+        {
+            board[d - 1][d - 2] = 2;
+            board[d - 1][d - 3] = 1;
+        }
+        game_initialized = false;
     }
     
     for (int i = 0; i < d; i++)
@@ -232,8 +241,7 @@ bool move(int tile)
  */
 bool won(void)
 {
-    // TODO
-    return false;
+    return 0;
 }
 
 /**
