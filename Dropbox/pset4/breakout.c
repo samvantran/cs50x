@@ -56,8 +56,10 @@ int main(void)
     // instantiate bricks
     initBricks(window);
 
-    // instantiate ball, centered in middle of window
+    // instantiate ball, centered in middle of window, and initialize velocity
     GOval ball = initBall(window);
+    double x_velocity = drand48() * 3;
+    double y_velocity = drand48() + 2;
 
     // instantiate paddle, centered at bottom of window
     GRect paddle = initPaddle(window);
@@ -89,6 +91,26 @@ int main(void)
                 setLocation(paddle, x, HEIGHT - 50);
             }
         }
+        
+        // ball movement
+        move(ball, x_velocity, y_velocity);
+        if (getX(ball) + RADIUS >= WIDTH)
+        {
+            x_velocity = -x_velocity;
+        }
+        else if (getX(ball) <= 0)
+        {
+            x_velocity = -x_velocity;
+        }
+        if (getY(ball) + RADIUS >= HEIGHT)
+        {
+            y_velocity = -y_velocity;
+        }
+        else if (getY(ball) <= 0)
+        {
+            y_velocity = -y_velocity;
+        }
+        pause(10);
     }
 
     // wait for click before exiting
@@ -106,9 +128,9 @@ void initBricks(GWindow window)
 {
     int width_spacer = 0;
     int height_spacer = 0;
-    for(int i = 0; i < 5; i++)
+    for(int i = 0, n = ROWS; i < n; i++)
     {
-        for(int j = 0; j < 10; j++)
+        for(int j = 0, o = COLS; j < o; j++)
         {
             GRect brick = newGRect(2 + width_spacer, HEIGHT / COLS + height_spacer, 35, PADDLEH);
             setFilled(brick, true);
