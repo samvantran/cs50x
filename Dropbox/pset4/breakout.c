@@ -102,13 +102,18 @@ int main(void)
         {
             x_velocity = -x_velocity;
         }
-        if (getY(ball) + RADIUS >= HEIGHT)
+        else if (detectCollision(window, ball) == paddle)
         {
             y_velocity = -y_velocity;
         }
         else if (getY(ball) <= 0)
         {
             y_velocity = -y_velocity;
+        }
+        else if (getY(ball) >= HEIGHT)
+        {
+            lives--;
+            initBall(window);
         }
         pause(10);
     }
@@ -239,21 +244,21 @@ GObject detectCollision(GWindow window, GOval ball)
     }
 
     // check for collision at ball's top-right corner
-    object = getGObjectAt(window, x + 2 * RADIUS, y);
+    object = getGObjectAt(window, x + RADIUS, y);
     if (object != NULL)
     {
         return object;
     }
 
     // check for collision at ball's bottom-left corner
-    object = getGObjectAt(window, x, y + 2 * RADIUS);
+    object = getGObjectAt(window, x, y + RADIUS);
     if (object != NULL)
     {
         return object;
     }
 
     // check for collision at ball's bottom-right corner
-    object = getGObjectAt(window, x + 2 * RADIUS, y + 2 * RADIUS);
+    object = getGObjectAt(window, x + RADIUS, y + RADIUS);
     if (object != NULL)
     {
         return object;
