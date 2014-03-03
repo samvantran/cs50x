@@ -94,6 +94,9 @@ int main(void)
         
         // ball movement
         move(ball, x_velocity, y_velocity);
+        
+        // check for collision
+        GObject object = detectCollision(window, ball);
         if (getX(ball) + RADIUS >= WIDTH)
         {
             x_velocity = -x_velocity;
@@ -102,8 +105,13 @@ int main(void)
         {
             x_velocity = -x_velocity;
         }
-        else if (detectCollision(window, ball) == paddle)
+        else if (object == paddle)
         {
+            y_velocity = -y_velocity;
+        }
+        else if (object != NULL)
+        {
+            removeGWindow(window, object);
             y_velocity = -y_velocity;
         }
         else if (getY(ball) <= 0)
@@ -112,8 +120,7 @@ int main(void)
         }
         else if (getY(ball) >= HEIGHT)
         {
-            lives--;
-            initBall(window);
+            y_velocity = -y_velocity;
         }
         pause(10);
     }
