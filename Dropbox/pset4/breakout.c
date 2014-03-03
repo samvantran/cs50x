@@ -80,6 +80,7 @@ int main(void)
         // Check for mouse event
         GEvent event = getNextEvent(MOUSE_EVENT);
         
+        // if we get one, have paddle follow cursor
         if (event != NULL)
         {
             if (getEventType(event) == MOUSE_MOVED)
@@ -103,7 +104,46 @@ int main(void)
  */
 void initBricks(GWindow window)
 {
-    // TODO
+    int width_spacer = 0;
+    int height_spacer = 0;
+    for(int i = 0; i < 5; i++)
+    {
+        for(int j = 0; j < 10; j++)
+        {
+            GRect brick = newGRect(2 + width_spacer, HEIGHT / COLS + height_spacer, 35, PADDLEH);
+            setFilled(brick, true);
+            
+            // set color of bricks for each row
+            switch(i)
+            {
+                case 0: 
+                    setColor(brick, "BLUE"); 
+                    break;
+                case 1: 
+                    setColor(brick, "GREEN");
+                    break;
+                case 2:
+                    setColor(brick, "YELLOW");
+                    break;
+                case 3:
+                    setColor(brick, "ORANGE");
+                    break;
+                case 4:
+                    setColor(brick, "RED");
+                    break;
+            }
+            add(window, brick);
+            
+            // create invisible bricks for spacing purposes
+            GRect brick_space = newGRect(50 + width_spacer, HEIGHT / COLS + height_spacer, 5, PADDLEH);
+            setFilled(brick_space, true);
+            setColor(brick_space, "WHITE");
+            add(window, brick_space);
+            width_spacer += 40;
+        }
+            width_spacer = 0;
+            height_spacer += 15;
+    }
 }
 
 /**
