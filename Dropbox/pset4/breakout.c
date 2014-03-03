@@ -28,7 +28,7 @@
 #define COLS 10
 
 // radius of ball in pixels
-#define RADIUS 10
+#define RADIUS 15
 
 // lives
 #define LIVES 3
@@ -151,8 +151,10 @@ void initBricks(GWindow window)
  */
 GOval initBall(GWindow window)
 {
-    // TODO
-    return NULL;
+    GOval ball = newGOval(WIDTH / 2 - RADIUS, HEIGHT / 2 - RADIUS, RADIUS, RADIUS);
+    setFilled(ball, true);
+    add(window, ball);
+    return ball;
 }
 
 /**
