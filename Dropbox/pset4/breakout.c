@@ -28,7 +28,7 @@
 #define COLS 10
 
 // radius of ball in pixels
-#define RADIUS 15
+#define RADIUS 20
 
 // lives
 #define LIVES 3
@@ -36,6 +36,7 @@
 // height and width of paddle
 #define PADDLEH 10
 #define PADDLEW 50
+
 
 // prototypes
 void initBricks(GWindow window);
@@ -56,10 +57,10 @@ int main(void)
     // instantiate bricks
     initBricks(window);
 
-    // instantiate ball, centered in middle of window, and initialize velocity
+    // instantiate ball, centered in middle of window and initialize velocity;
     GOval ball = initBall(window);
-    double x_velocity = drand48() * 3;
-    double y_velocity = drand48() + 2;
+    double x_velocity = 0.0;
+    double y_velocity = 0.0;
 
     // instantiate paddle, centered at bottom of window
     GRect paddle = initPaddle(window);
@@ -90,13 +91,20 @@ int main(void)
                 double x = getX(event) - getWidth(paddle) / 2;
                 setLocation(paddle, x, HEIGHT - 50);
             }
+            
+            if (getEventType(event) == MOUSE_CLICKED)
+            {
+                // move ball
+                x_velocity = drand48() * 2;
+                y_velocity = drand48() * 2 + 1;
+            }
         }
         
-        // ball movement
         move(ball, x_velocity, y_velocity);
         
-        // check for collision
+         // check for collision
         GObject object = detectCollision(window, ball);
+
         if (getX(ball) + RADIUS >= WIDTH)
         {
             x_velocity = -x_velocity;
@@ -109,9 +117,11 @@ int main(void)
         {
             y_velocity = -y_velocity;
         }
-        else if (object != NULL)
+        else if (object != NULL && object != label && object != paddle)
         {
             removeGWindow(window, object);
+            points++;
+            updateScoreboard(window, label, points);
             y_velocity = -y_velocity;
         }
         else if (getY(ball) <= 0)
@@ -120,14 +130,23 @@ int main(void)
         }
         else if (getY(ball) >= HEIGHT)
         {
-            y_velocity = -y_velocity;
+            remove(window, ball);
+            break;
         }
+        move(ball, x_velocity, y_velocity);
         pause(10);
+       
+    
+        if (getY(ball) >= HEIGHT)
+        {
+            initBall(window);
+            lives--;
+        }
     }
-
+    
     // wait for click before exiting
     waitForClick();
-
+            
     // game over
     closeGWindow(window);
     return 0;
@@ -185,7 +204,7 @@ void initBricks(GWindow window)
  */
 GOval initBall(GWindow window)
 {
-    GOval ball = newGOval(WIDTH / 2 - RADIUS, HEIGHT / 2 - RADIUS, RADIUS, RADIUS);
+    GOval ball = newGOval((WIDTH - RADIUS) / 2, (HEIGHT - RADIUS) / 2, RADIUS, RADIUS);
     setFilled(ball, true);
     add(window, ball);
     return ball;
@@ -208,8 +227,14 @@ GRect initPaddle(GWindow window)
  */
 GLabel initScoreboard(GWindow window)
 {
-    // TODO
-    return NULL;
+    GLabel label = newGLabel("0");
+    setFont(label, "SansSerif-18");
+    setColor(label, "GRAY");
+    double x = (getWidth(window) - getWidth(label)) / 2;
+    double y = (getHeight(window) - getHeight(label)) / 2;
+    setLocation(label, x, y);
+    add(window, label);
+    return label; 
 }
 
 /**
