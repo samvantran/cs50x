@@ -59,6 +59,8 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Unsupported file format.\n");
         return 4;
     }
+    
+    bf.
 
     // write outfile's BITMAPFILEHEADER
     fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);

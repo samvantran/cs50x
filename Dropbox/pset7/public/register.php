@@ -7,7 +7,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         // validate submission
-        if (empty($_POST["username"))
+        if (empty($_POST["username"]))
         {
             apologize("You must enter a username!");
         }
@@ -20,7 +20,22 @@
             apologize("Passwords do not match!");
         }
         
-        // $result = query("INSERT INTO users (username, hash, cash) VALUES(?, ?, 10000.00)", $_POST["username"], crypt($_POST["password"]));
+        // add new user
+        $result = query("INSERT INTO users (username, hash, cash) VALUES(?, ?, 10000.00)", 
+                        $_POST["username"], crypt($_POST["password"]));
+        
+        if ($result === false)
+        {
+            apolgize("Sorry Username already exists!");
+        }
+        
+        // redirect to log in
+        $rows = query("SELECT LAST_INSERT_ID() AS id");
+        $id = $rows[0]["id"];
+        $_SESSION["id"] = $id;
+        
+        redirect("/");
+
     }
     else
     {
