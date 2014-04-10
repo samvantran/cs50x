@@ -15,11 +15,10 @@ So far, most of my programming has been in C and I've learned about:
   Pointers, stack vs heap, memory leaks, and Valgrind
   Just starting data structures with linked lists, hash tables, and tries.
   
+-------------------------  
 Update: April 2013
 
-Now I'm starting to learn about web programming. 
-
-First project is in PHP, HTML, CSS, and a touch of SQL.
+Now I'm starting to learn about web programming. First project is in PHP, HTML, CSS, and a touch of SQL.
 
 Future project will be in JavaScript.
 
