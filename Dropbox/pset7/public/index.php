@@ -5,7 +5,7 @@
 
     // query user's data
     $rows = query("SELECT * FROM portfolio WHERE id = ?", $_SESSION["id"]);
-    
+   
     // lookup all positions in user's portfolio
     $positions = [];
     foreach ($rows as $row)

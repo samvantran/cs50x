@@ -6,5 +6,5 @@
     </fieldset>
 </form>
 <div>
-    return to <a href="/">main</a>
+    Return to <a href="/">main</a>
 </div>
