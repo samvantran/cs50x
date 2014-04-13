@@ -6,22 +6,33 @@
     // sell shares
     if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
-        // calculate revenue
-        $shares = query("SELECT shares FROM portfolio WHERE id = ? AND symbol =?", $_SESSION["id"], $_POST["symbol"]);
-        $share_price = lookup($_POST["symbol"]);
-        $revenue = $shares[0]["shares"] * $share_price["price"];
-        
-        $delete_share = query("DELETE FROM portfolio WHERE id = ? AND symbol = ?", $_SESSION["id"], $_POST["symbol"]);
-        
-        if ($delete_share !== false)
+        // check stock exists
+        $stock_data = lookup($_POST["symbol"]);
+        if ($stock_data !== false)
         {
-            query("UPDATE users SET cash = cash + $revenue WHERE id = ?", $_SESSION["id"]);
+            // check user owns stock
+            $shares = query("SELECT shares FROM portfolio WHERE id = ? AND symbol =?", $_SESSION["id"], $_POST["symbol"]);
+            if ($shares !== false)
+            {
+                // delete stock from portfolio
+                $delete_share = query("DELETE FROM portfolio WHERE id = ? AND symbol = ?", $_SESSION["id"], $_POST["symbol"]);
+
+                // calculate revenue for selling shares and update portfolio
+                $revenue = $shares[0]["shares"] * $stock_data["price"];
+                query("UPDATE users SET cash = cash + $revenue WHERE id = ?", $_SESSION["id"]);
+
+                // display form
+                render("sell_display.php", ["title" => "Sold!"]);
+            }
+            else
+            {
+                apologize("You do not own any shares of this stock!");
+            }
             
-            render("sell_display.php", ["title" => "Sold!"]);
         }
         else
         {
-            print("You do not own any shares of this stock!");
+            apologize("Stock does not exist!");
         }
     }
     else
