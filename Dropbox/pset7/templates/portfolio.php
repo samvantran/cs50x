@@ -54,6 +54,8 @@
 <div>
     <a href="quote.php">Get Quote</a>
     <br/>
+    <a href="buy.php">Buy Shares</a>
+    <br/>
     <a href="sell.php">Sell Shares</a>
     <br/>
     <a href="logout.php">Log Out</a>
