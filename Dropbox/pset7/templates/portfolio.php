@@ -38,8 +38,8 @@
                     <td><?= $position["symbol"] ?></td>
                     <td><?= $position["name"] ?></td>
                     <td><?= $position["shares"] ?></td>
-                    <td><?= number_format($position["price"], 4) ?></td>
-                    <td><?= number_format($position["shares"] * $position["price"], 4) ?>
+                    <td><?= $position["price"] ?></td>
+                    <td><?= $position["shares"] * $position["price"] ?>
                 </tr>
 
             <?php endforeach ?>

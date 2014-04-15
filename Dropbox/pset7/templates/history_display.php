@@ -28,8 +28,8 @@
                 <td><?= $row["transaction"] ?></td>
                 <td><?= date('m/d/y, g:i a', strtotime($row["datetime"])) ?></td>
                 <td><?= $row["symbol"] ?></td>
-                <td><?= number_format($row["shares"], 4) ?></td>
-                <td><?= number_format($row["price"], 4) ?>
+                <td><?= $row["shares"] ?></td>
+                <td><?= $row["price"] ?>
             </tr>
 
         <?php endforeach ?>
