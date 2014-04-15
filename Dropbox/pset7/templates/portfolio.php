@@ -3,9 +3,9 @@
 
     <style>
 
-    .portfolio { width: 600px; margin: auto; border: 3px solid black; }
+    .portfolio { width: 800px; margin: auto; border: 3px solid black; }
     tr.heading { font-weight: bold; text-align: center; }
-    td { padding-left: 25px; padding-right: 25px; }
+    td { padding-left: 40px; padding-right: 40px; }
     .navbar a { padding-left: 20px; padding-right: 20px; }
 
     </style> 
