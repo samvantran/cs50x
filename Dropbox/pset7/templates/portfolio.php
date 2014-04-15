@@ -17,6 +17,7 @@
         <a href="buy.php">Buy Shares</a>
         <a href="sell.php">Sell Shares</a>
         <a href="history.php">History</a>
+        <a href="password.php">Change Password</a>
         <a href="logout.php">Log Out</a>
     </div>
 
