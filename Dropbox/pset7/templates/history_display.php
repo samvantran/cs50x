@@ -19,14 +19,14 @@
              
         <?php 
         
+        // display transaction history
         $history_data = query("SELECT * FROM history WHERE id = ?", $_SESSION["id"]);
         
-        // $history = [];
         foreach ($history_data as $row): ?>
         
             <tr>
                 <td><?= $row["transaction"] ?></td>
-                <td><?= date("m.d.y g:i a", time($row["datetime"])) ?></td>
+                <td><?= date('m/d/y, g:i a', strtotime($row["datetime"])) ?></td>
                 <td><?= $row["symbol"] ?></td>
                 <td><?= number_format($row["shares"], 4) ?></td>
                 <td><?= number_format($row["price"], 4) ?>
