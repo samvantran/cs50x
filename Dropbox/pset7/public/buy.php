@@ -22,7 +22,7 @@
             {
                 // store symbol and price
                 $stock_symbol = $stock_data["symbol"];
-                $transaction_cost = $stock_data["price"] + $_POST["shares"];
+                $transaction_cost = $stock_data["price"] * $_POST["shares"];
                 
                 // check for sufficient funds
                 if ($transaction_cost <= query("SELECT cash FROM users WHERE id = ?", $_SESSION["id"]))
@@ -33,6 +33,10 @@
                     // buy shares and add to portfolio
                     query("INSERT INTO portfolio (id, symbol, shares) VALUES(?, '$stock_symbol', ?)
                     ON DUPLICATE KEY UPDATE shares = shares + VALUES(shares)", $_SESSION["id"], $_POST["shares"]);
+                    
+                    // log transaction in history
+                    query("INSERT INTO history(id, transaction, datetime, symbol, shares, price) 
+                            VALUES (?, 'BUY', NOW(), '$stock_symbol', ?, ?)", $_SESSION["id"], $_POST["shares"], $transaction_cost); 
                 }
                 else 
                 {
