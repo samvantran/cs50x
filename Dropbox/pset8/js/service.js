@@ -288,12 +288,14 @@ function pickup()
                 {
                     // add passenger to shuttle
                     shuttle.seats[j] = PASSENGERS[i].name + " to " + PASSENGERS[i].house;
+                    chart();
+                                        
+                    // remove placemark from 3D Earth
+                    earth.getFeatures().removeChild(PASSENGERS[i].placemark);
                     
-                    // remove placement from 3D Earth
-                    var features = earth.getFeatures();
-                    features.removeChild(placemark);
                     // remove marker from 2D map
-                    marker.setMap(null);
+                    PASSENGERS[i].marker.setMap(null);
+                    break;
                 }
                 else
                 {
@@ -377,6 +379,7 @@ function populate()
         // TODO: remember passenger's placemark and marker for pick-up's sake
         PASSENGERS[i].lat = building.lat;
         PASSENGERS[i].lng = building.lng;
+        PASSENGERS[i].placemark = placemark;
         PASSENGERS[i].marker = marker;
     }
 }
